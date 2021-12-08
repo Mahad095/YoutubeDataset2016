@@ -5,7 +5,7 @@
 #include <fstream>
 #include<unordered_map>
 #include<vector>
-
+#include <sstream>
 using namespace std;
 
 namespace fs = experimental::filesystem;
@@ -18,20 +18,46 @@ public:
     int categoryId;
     vector<string> comments;
     
-    static Video&& CreateVideo(fs::path& p)
+    static Video CreateVideo(fs::path p)
     {
         Video vid;
-        fstream obj(p);
+        fstream file(p);
+        string tempStr;
+        
+        getline(file, tempStr);
+        vid.id = tempStr.substr(tempStr.find(':') + 1);
+
+        getline(file, tempStr);
+        vid.title = tempStr.substr(tempStr.find(':') + 1);
+
+        getline(file, tempStr);
+        vid.categoryId = stoi(tempStr.substr(tempStr.find(':') + 1));
+        file.close();
+        return vid;
     }
+
+    void Display()
+    {
+        cout << this->id << '\n';
+        cout << this->title << '\n';
+        cout << this->categoryId << '\n';
+        cout << "\n";
+    }
+
 };
 
 int main()
 {
-    string path = "2016";
-    vector<Video> videos(200000);
+    string path = "Subset1";
+    vector<Video> videos;
+    videos.reserve(10);
 
     for (auto& p : fs::recursive_directory_iterator(path))
-        cout << p.path() << endl;
+        videos.push_back(Video::CreateVideo(p.path()));
 
 
+    for (Video& v : videos)
+    {
+        v.Display();
+    }
 }
