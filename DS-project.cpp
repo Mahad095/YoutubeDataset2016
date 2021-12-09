@@ -1,14 +1,15 @@
-#define _SILENCE_EXPERIMENTAL_FILESYSTEM_DEPRECATION_WARNING
 #include <string>
 #include <iostream>
-#include <experimental/filesystem>
+#include <filesystem>
 #include <fstream>
 #include<unordered_map>
 #include<vector>
 #include <sstream>
+
 using namespace std;
 
-namespace fs = experimental::filesystem;
+
+namespace fs = filesystem;
 
 namespace filter {
 
@@ -113,33 +114,16 @@ int main()
     string path = "2016";
     vector<Video> videos;
     videos.reserve(30);
-
     for (auto& p : fs::recursive_directory_iterator(path))
         videos.push_back(Video(p.path()));
 
 
-    cout << "The number of videos before removing: "<< videos.size() << '\n';
+    //Invalid records can be remove with this
+    /*
     videos.erase(std::remove_if(
         videos.begin(), videos.end(),
         [](const Video& x) {
             return x.invalid; // put your condition here
         }), videos.end());
-    cout << "The number of videos after removing: " << videos.size() << '\n';
-
-    //ofstream write("DataSetFullNew.txt");
-
-
-
-    //for (Video& v : videos)
-    //{
-    //    write << v.id << '\n';
-    //    write << v.title << '\n';
-    //    write << v.categoryId << '\n';
-    //    for (auto& s : v.comments)
-    //    {
-    //        write << s << '\n';
-    //    }
-    //    write << '\n';
-    //}
-    //write.close();
+    */
 }
