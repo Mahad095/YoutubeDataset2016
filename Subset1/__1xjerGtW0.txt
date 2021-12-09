@@ -1,6 +1,0 @@
-id:__1xjerGtW0
-title:Jon Bon Jovi Nashville 3/19/2016 Living On A Prayer
-categoryId:22
-publishedAt:2016-03-21T01:11:30.000Z
-location:-28.381023195796658,-69.58836053858758
-description:Runaway Tours An Evening With Jon Bon Jovi Living On A Prayer

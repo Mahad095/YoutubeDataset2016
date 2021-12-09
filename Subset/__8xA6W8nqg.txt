@@ -1,6 +1,0 @@
-id:__8xA6W8nqg
-title:IRONMAN Weymouth - 2016
-categoryId:17
-publishedAt:2016-07-25T09:29:07.000Z
-location:3.006689720548989,-57.26100833289142
-description:Choose your distance and be part of history!

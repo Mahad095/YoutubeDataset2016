@@ -33,44 +33,65 @@ public:
     string title;
     int categoryId;
     vector<string> comments;
-    
-    static Video CreateVideo(fs::path p)
+    bool invalid; 
+    size_t NumberOfComments()
     {
-        Video vid;
+        return comments.size();
+    }
+    Video(){}
+    Video(fs::path p)
+    {
+        cout << p << '\n';
         fstream file(p);
         string tempStr;
-        
-        getline(file, tempStr);
-        vid.id = tempStr.substr(tempStr.find(':') + 1);
-
-        getline(file, tempStr);
-        vid.title = tempStr.substr(tempStr.find(':') + 1);
-
-        getline(file, tempStr);
-        vid.categoryId = stoi(tempStr.substr(tempStr.find(':') + 1));
-        
-        getline(file, tempStr); /* Irrelevant information */
-        getline(file, tempStr); /* Irrelevant information */
-        getline(file, tempStr); /* Irrelevant information */
-
-
-        while (getline(file, tempStr))
+        this->invalid = false;
+        try
         {
-            size_t i = tempStr.find("Comment:") + 8;
-            size_t j = tempStr.find("PublishAt:");
+            getline(file, tempStr);
+            this->id = tempStr.substr(tempStr.find(':') + 1);
 
-            string temp = tempStr.substr(i, j - i);
-            if (temp[temp.length() - 1] == '\t') temp.pop_back();
-            filter::StripUnicode(temp);
-            filter::StripNonAplhaNumericCharacters(temp);
-            if(!temp.empty())
-                vid.comments.push_back(temp);
+            getline(file, tempStr);
+            this->title = tempStr.substr(tempStr.find(':') + 1);
+
+            getline(file, tempStr);
+            this->categoryId = stoi(tempStr.substr(tempStr.find(':') + 1));
         }
+        catch (...)
+        {
+            this->invalid = true;
+        }
+        if (!invalid)
+        {
+            getline(file, tempStr); /* Irrelevant information */
+            getline(file, tempStr); /* Irrelevant information */
+            getline(file, tempStr); /* Irrelevant information */
 
+
+            while (getline(file, tempStr))
+            {
+                string temp;
+                size_t i = tempStr.find("Comment:");
+                if (i == string::npos) continue;  /*Not found*/
+                i += 8; /* 8 chars for the "Comment:"*/
+                size_t j = tempStr.find("PublishAt:");
+                if (j == string::npos) continue; /*Not found*/
+                try
+                {
+                    temp = tempStr.substr(i, j - i);
+                }
+                catch (...) { continue; }
+                if (!temp.empty())
+                {
+                    if (temp[temp.length() - 1] == '\t') temp.pop_back();
+                    filter::StripUnicode(temp);
+                    filter::StripNonAplhaNumericCharacters(temp);
+                    if(!temp.empty()) /*Some cases might become empty after filtering*/
+                        this->comments.push_back(temp);
+                }
+            }
+        }
         file.close();
-        return vid;
     }
-
     void Display()
     {
         cout << this->id << '\n';
@@ -89,16 +110,36 @@ public:
 
 int main()
 {
-    string path = "Subset1";
+    string path = "2016";
     vector<Video> videos;
-    videos.reserve(10);
+    videos.reserve(30);
 
     for (auto& p : fs::recursive_directory_iterator(path))
-        videos.push_back(Video::CreateVideo(p.path()));
+        videos.push_back(Video(p.path()));
 
 
-    for (Video& v : videos)
-    {
-        v.Display();
-    }
+    cout << "The number of videos before removing: "<< videos.size() << '\n';
+    videos.erase(std::remove_if(
+        videos.begin(), videos.end(),
+        [](const Video& x) {
+            return x.invalid; // put your condition here
+        }), videos.end());
+    cout << "The number of videos after removing: " << videos.size() << '\n';
+
+    //ofstream write("DataSetFullNew.txt");
+
+
+
+    //for (Video& v : videos)
+    //{
+    //    write << v.id << '\n';
+    //    write << v.title << '\n';
+    //    write << v.categoryId << '\n';
+    //    for (auto& s : v.comments)
+    //    {
+    //        write << s << '\n';
+    //    }
+    //    write << '\n';
+    //}
+    //write.close();
 }
