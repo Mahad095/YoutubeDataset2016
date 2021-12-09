@@ -59,6 +59,7 @@ Video::Video(fs::path p)
     }
     file.close();
 }
+
 void Video::Display()
 {
     cout << this->id << '\n';
