@@ -7,3 +7,6 @@ DS-project.vcxproj.filters
 DS-project.vcxproj.user
 DataSetFullNew.txt
 x64/
+Subset10/
+Subset100/
+Subset1000/
