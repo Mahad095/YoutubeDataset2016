@@ -9,9 +9,9 @@ int main()
         videos.push_back(Video(p.path()));
 
 
-    Analyzer analyzer(videos);
-    analyzer.Buzzwords_Comments(20);
-
+    Analyzer analyzer(videos);      // Load Video Data
+    analyzer.Analyze();             // Parse Data
+    analyzer.BuzzwordAnalysis(50);  // Perform Analysis on Data
 
     //Invalid records can be remove with this
     /*

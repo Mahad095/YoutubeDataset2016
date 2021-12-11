@@ -9,10 +9,15 @@ class Analyzer
 {
 public:
 	Analyzer(vector<Video>& videos);
-	void Buzzwords_Comments(int);
-	void Buzzwords_Titles(int);
+	void Analyze();
+	void BuzzwordAnalysis(int);
+	void ParseComments();
+	void LoadStopWords();
+	void FilterStopWords();
 
 private:
 	vector<Video> _videos;
+	unordered_map<string, int> _words;
+	unordered_map<string, int> _stopwords;
 };
 
