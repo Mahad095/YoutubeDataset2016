@@ -11,7 +11,7 @@ int main()
 
     Analyzer analyzer(videos);      // Load Video Data
     analyzer.Analyze();             // Parse Data
-    analyzer.BuzzwordAnalysis(50);  // Perform Analysis on Data
+    analyzer.BuzzwordAnalysis(1000);  // Perform Analysis on Data
 
     //Invalid records can be remove with this
     /*

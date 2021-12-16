@@ -13,3 +13,8 @@ void filter::StripNonAplhaNumericCharacters(string& s)
 {
     s.erase(remove_if(s.begin(), s.end(), &ispunct), s.end());
 }
+
+void filter::ConvertToLowerCase(string& s)
+{
+    std::transform(s.begin(), s.end(), s.begin(), ::tolower);
+}

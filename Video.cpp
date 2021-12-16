@@ -32,8 +32,6 @@ Video::Video(fs::path p)
         getline(file, tempStr); /* Irrelevant information */
         getline(file, tempStr); /* Irrelevant information */
         getline(file, tempStr); /* Irrelevant information */
-
-
         while (getline(file, tempStr))
         {
             string temp;
@@ -52,6 +50,7 @@ Video::Video(fs::path p)
                 if (temp[temp.length() - 1] == '\t') temp.pop_back();
                 filter::StripUnicode(temp);
                 filter::StripNonAplhaNumericCharacters(temp);
+                filter::ConvertToLowerCase(temp);
                 if (!temp.empty()) /*Some cases might become empty after filtering*/
                     this->comments.push_back(temp);
             }
