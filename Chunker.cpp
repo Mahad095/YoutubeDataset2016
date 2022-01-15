@@ -3,7 +3,6 @@
 Chunker::Chunker(string mainDatasetPath):list{3,4,5,6,7,8,9,11,12,13,14,16,18,21}
 {
 	
-	idcount = new int[30];
 	this->MakeDirectories();
 	int counter = 0;
 	// this is the get videos part it will read videos up to a limit write them down in their proper paths and then erase them from vector
@@ -49,7 +48,6 @@ void Chunker::FillDirectories()
 		ofstream tempfile("Datasets/" + path +'/' +videos[i].id+".txt");
 		tempfile << videos[i].id <<'\n';
 		tempfile << videos[i].title<< '\n';
-		idcount[videos[i].categoryId]++;
 		for (size_t j = 0; j < videos[i].NumberOfComments(); j++) {
 			tempfile << videos[i].comments[j] << '\n';
 		}
