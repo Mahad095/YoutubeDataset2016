@@ -16,6 +16,7 @@ Chunker::Chunker(string mainDatasetPath):list{3,4,5,6,7,8,9,11,12,13,14,16,18,21
 			videos.clear();
 			cout << totalVideoCount << " videos have been chunked!\n";
 		}
+
 	}
 	//flush
 	if (videos.size() != 0) {

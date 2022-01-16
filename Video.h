@@ -23,5 +23,6 @@ public:
     size_t NumberOfComments();
     Video() {};
     Video(fs::path p);
+    Video(fs::path p, int);
     void Display();
 };

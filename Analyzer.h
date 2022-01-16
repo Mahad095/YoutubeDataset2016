@@ -16,7 +16,7 @@ public:
 	void FilterStopWords();
 
 private:
-	vector<Video> _videos;
+	vector<Video>& _videos;
 	unordered_map<string, int> _words;
 	unordered_map<string, int> _stopwords;
 };

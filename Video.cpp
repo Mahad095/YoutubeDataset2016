@@ -8,7 +8,6 @@ size_t Video::NumberOfComments()
 
 Video::Video(fs::path p)
 {
-    cout << p << '\n';
     fstream file(p);
     string tempStr;
     this->invalid = false;
@@ -34,7 +33,7 @@ Video::Video(fs::path p)
         getline(file, tempStr); /* Irrelevant information */
         while (getline(file, tempStr))
         {
-            string temp;
+            string temp;    
             size_t i = tempStr.find("Comment:");
             if (i == string::npos) continue;  /*Not found*/
             i += 8; /* 8 chars for the "Comment:"*/
@@ -58,6 +57,19 @@ Video::Video(fs::path p)
     }
     file.close();
 }
+
+Video::Video(fs::path p, int)
+{
+    fstream f(p);
+    f >> id;
+    f >> title;
+    string temp;
+    while(getline(f, temp))
+        comments.push_back(temp);
+    f.close();
+}
+
+
 
 void Video::Display()
 {
