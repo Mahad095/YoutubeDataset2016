@@ -25,6 +25,12 @@ void Menu::MainLoop()
                 path = "Datasets";
             else
                 path = "Datasets/" + to_string(uInput);
+            if (!fs::exists(path))
+            {
+                cout << "This path does not exist." << endl;
+                cout << endl;
+                continue;
+            }
             cout << "Reading..." << '\n';
             for (auto& p : fs::recursive_directory_iterator(path))
                 videos.push_back(Video(p.path(), int()));
